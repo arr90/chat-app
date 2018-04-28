@@ -21,10 +21,12 @@ let messages = [];
 io.on('connection', socket => { //toda vez que um cliente se conectar
     console.log(`Socket conectado: ${socket.id}`);
 
+    socket.emit('previosMessages', messages);//evento para mostrar as mensagens anteriores
+
     socket.on('sendMessage', data => {
         console.log(data);
         messages.push(data);
-        socket.broadcast.emit('receivedMessage', data);//envia o evento para todos os sockets conectados
+        socket.broadcast.emit('receivedMessage', data);//evento para enviar a mensagem para todos os sockets conectados
     });
 });
 

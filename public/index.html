@@ -32,6 +32,12 @@
                 renderMessage(message);
             });
 
+            socket.on('previosMessages', function(messages){
+                messages.forEach(message => {
+                    renderMessage(message);
+                });
+            });
+
             $('#chat').submit(function(event){
                 event.preventDefault();
 
