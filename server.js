@@ -16,11 +16,14 @@ app.use('/', (req,res) => {
     res.render('index.html');
 });
 
+let messages = [];
+
 io.on('connection', socket => { //toda vez que um cliente se conectar
     console.log(`Socket conectado: ${socket.id}`);
 
     socket.on('sendMessage', data => {
         console.log(data);
+        messages.push(data);
     });
 });
 
