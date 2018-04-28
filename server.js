@@ -18,6 +18,10 @@ app.use('/', (req,res) => {
 
 io.on('connection', socket => { //toda vez que um cliente se conectar
     console.log(`Socket conectado: ${socket.id}`);
+
+    socket.on('sendMessage', data => {
+        console.log(data);
+    });
 });
 
 
