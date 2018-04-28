@@ -24,6 +24,7 @@ io.on('connection', socket => { //toda vez que um cliente se conectar
     socket.on('sendMessage', data => {
         console.log(data);
         messages.push(data);
+        socket.broadcast.emit('receivedMessage', data);//envia o evento para todos os sockets conectados
     });
 });
 
