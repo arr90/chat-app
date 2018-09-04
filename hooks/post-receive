@@ -1,0 +1,10 @@
+!/bin/sh
+XDG_CONFIG_HOME=/home/bitnami/stack/apps/chat-app git --work-tree=/home/bitnami/stack/apps/chat-app --git-dir=/home/bitnami/stack/apps/chat-app/chat-app.git checkout -f
+HOME=/home/bitnami/stack/apps/chat-app
+#may need to end other tasks running on the port if you have any
+#postreceive functions to run
+#go into the app folder to run functions
+cd /home/bitnami/stack/apps/chat-app
+#insert any commands to run afterwards here such as npm install,npm build, npm start
+npm start
+
