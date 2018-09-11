@@ -21,14 +21,13 @@ app.use('/', (req,res) => {
 let messages = [];
 let socketsConnected = [];
 
-io.on('connection', socket => { //toda vez que um cliente se conectar
-    console.log(`Socket conectado: ${socket.id}`);
-    socket.emit('socketsConnected', socketsConnected.length);
+io.sockets.on('connection', socket => { //toda vez que um cliente se conectar
+    console.log(`Socket conectado: ${socket.id}`);    
     socketsConnected.push(socket);
+    socket.emit('socketsConnected', socketsConnected.length);
     
     socket.on('disconnect', function(reason){
-        console.log('Got disconnect! - Reason: ' + reason);
-        
+        console.log('Got disconnect! - Reason: ' + reason);        
         let i = socketsConnected.indexOf(socket);
         socketsConnected.splice(i, 1);
         socket.emit('socketsConnected', socketsConnected.length);
@@ -39,7 +38,9 @@ io.on('connection', socket => { //toda vez que um cliente se conectar
     socket.on('sendMessage', data => {
         console.log(data);
         messages.push(data);
+        
         socket.broadcast.emit('receivedMessage', data);//evento para enviar a mensagem para todos os sockets conectados
+        socket.emit('receivedMessage', data);//evento para enviar a mensagem para o próprio socket
     });
 });
 

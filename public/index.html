@@ -28,7 +28,10 @@
             var socket = io();
 
             function renderMessage(message){
-                $('.messages').prepend('<div class="message"><span>'+message.dateTime+'</span><strong>'+message.author+': </strong>'+ message.message +'</div>');
+                $('.messages').prepend('<div class="message"><span>'+message.dateTime+' </span><strong>'+message.author+': </strong>'+ message.message +'</div>');
+            }
+            function renderInfo(count){
+                $('#info').html('<span>'+count+' sockets conectados</span>');
             }
 
             socket.on('receivedMessage', function(message){
@@ -42,6 +45,7 @@
             });
             
             socket.on('socketsConnected', function(count){
+                renderInfo(count);
                 console.log(count);
             });
 
@@ -57,8 +61,6 @@
                         message: message,
                         dateTime: moment().format('LT')
                     };
-
-                    renderMessage(messageObject);
 
                     socket.emit('sendMessage', messageObject);
                 }
