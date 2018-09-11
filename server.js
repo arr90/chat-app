@@ -19,17 +19,19 @@ app.use('/', (req,res) => {
 });
 
 let messages = [];
-let usersConnected = [];
+let socketsConnected = [];
 
 io.on('connection', socket => { //toda vez que um cliente se conectar
     console.log(`Socket conectado: ${socket.id}`);
-    usersConnected.push(socket);
-
+    socket.emit('socketsConnected', socketsConnected.length);
+    socketsConnected.push(socket);
+    
     socket.on('disconnect', function(reason){
         console.log('Got disconnect! - Reason: ' + reason);
-
-        let i = usersConnected.indexOf(socket);
-        usersConnected.splice(i, 1);
+        
+        let i = socketsConnected.indexOf(socket);
+        socketsConnected.splice(i, 1);
+        socket.emit('socketsConnected', socketsConnected.length);
     });
 
     socket.emit('previosMessages', messages);//evento para mostrar as mensagens anteriores
