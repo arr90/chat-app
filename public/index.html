@@ -28,10 +28,14 @@
             var socket = io();
 
             function renderMessage(message){
-                $('.messages').prepend('<div class="message"><span>'+message.dateTime+' </span><strong>'+message.author+': </strong>'+ message.message +'</div>');
+                $('.messages').prepend('<div class="message">'+
+                    '<div class="head_msg"><span class="date_msg sub">'+message.dateTime+'</span><span class="author_msg">'+message.author+':</span></div>'+
+                    '<div class="body_msg"><span class="message">'+message.message+'</span></div>'+
+                    '<div class="foot_msg"></div>'+
+                '</div>');
             }
             function renderInfo(count){
-                $('#info').html('<span>'+count+' sockets conectados</span>');
+                $('#info').html('<span class="info">'+count+' sockets conectados</span>');
             }
 
             socket.on('receivedMessage', function(message){
