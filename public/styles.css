@@ -46,10 +46,10 @@ div.messages {
 }
 
 div.message {
-  border-left: 6px solid #069;
-  background-color: #f9f9f9;
+  background-color: #eee;
   padding: 10px;
   margin-bottom: 10px;
+  border-radius: 15px;
 }
 
 span.date_msg {
