@@ -1,11 +1,13 @@
+const http = require('http');
 const express = require('express'); //tratativa das rotas
 const path = require('path'); //padrao do node
+const socketIO = require('socket.io');
+
+const PORT = process.env.PORT || 5000;
 
 const app = express();
-
-//porta que vai ser acessada pelo websocket --protocolo wss
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+const server = http.createServer(app);
+const io = socketIO(server);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'public'));
@@ -40,4 +42,4 @@ io.on('connection', socket => { //toda vez que um cliente se conectar
 });
 
 
-server.listen(3000);
+server.listen(PORT, () => console.log(`Listening on ${PORT}`));
