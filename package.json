@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node bin/server"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +13,7 @@
   "dependencies": {
     "ejs": "^2.5.9",
     "express": "^4.16.3",
-    "socket.io": "^2.1.0"
+    "socket.io": "^2.1.0",
+    "xss": "^1.0.3"
   }
 }

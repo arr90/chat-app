@@ -7,11 +7,14 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/locale/pt-br.js"></script>
 
         <link rel="stylesheet" href="styles.css">
 
     </head>
     <body>
+        <div id="info"></div>
 
         <form id="chat">
             <input type="text" name="username" placeholder="Digite seu usuário">
@@ -25,17 +28,29 @@
             var socket = io();
 
             function renderMessage(message){
-                $('.messages').prepend('<div class="message"><strong>'+message.author+': </strong>'+ message.message +'</div>');
+                $('.messages').prepend('<div class="message">'+
+                    '<div class="head_msg"><span class="date_msg sub">'+message.dateTime+'</span><span class="author_msg">'+message.author+':</span></div>'+
+                    '<div class="body_msg"><span class="message">'+message.message+'</span></div>'+
+                    '<div class="foot_msg"></div>'+
+                '</div>');
+            }
+            function renderInfo(count){
+                $('#info').html('<span class="info">'+count+' sockets conectados</span>');
             }
 
             socket.on('receivedMessage', function(message){
                 renderMessage(message);
             });
-
+            
             socket.on('previosMessages', function(messages){
                 messages.forEach(message => {
                     renderMessage(message);
                 });
+            });
+            
+            socket.on('socketsConnected', function(count){
+                renderInfo(count);
+                console.log(count);
             });
 
             $('#chat').submit(function(event){
@@ -47,10 +62,9 @@
                 if(author.length && message.length){
                     var messageObject = {
                         author: author,
-                        message:message
+                        message: message,
+                        dateTime: moment().format('LT')
                     };
-
-                    renderMessage(messageObject);
 
                     socket.emit('sendMessage', messageObject);
                 }
